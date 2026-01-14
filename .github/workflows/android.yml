@@ -48,3 +48,10 @@ jobs:
     # Skip the connected checks in the CI script, as they require an emulator setup.
     - name: Run CI script
       run: ./ci-android.sh --skip-connected-check
+
+    - name: Upload AAR artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: LofeltHaptics-16kb-aligned
+        path: android-library/LofeltHaptics.aar
+        retention-days: 30
