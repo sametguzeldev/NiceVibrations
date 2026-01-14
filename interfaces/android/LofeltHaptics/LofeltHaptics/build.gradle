@@ -54,6 +54,9 @@ android {
         textReport true
         // treat all warnings as errors
         warningsAsErrors true
+        // disable OldTargetApi check - this is a library and doesn't need to
+        // always target the absolute latest SDK version
+        disable 'OldTargetApi'
     }
 
     buildFeatures {
