@@ -3,10 +3,7 @@
 package com.lofelt.haptics;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Vibrator;
-
-import androidx.annotation.RequiresApi;
 
 /**
  * This class is responsible for playback of basic haptic patterns create at runtime. It doesn't
@@ -15,7 +12,6 @@ import androidx.annotation.RequiresApi;
  * Android devices that don't meet the minimum requirements of LofeltHaptics class can make use of
  * this.
  */
-@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
 public class HapticPatterns {
 
     final private Vibrator vibrator;

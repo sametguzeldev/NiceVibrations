@@ -4,11 +4,11 @@ plugins {
 
 android {
     namespace 'com.lofelt.haptics'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         minSdk 21
-        targetSdk 34
+        targetSdk 35
 
         versionCode 1
         versionName "1.3.4"
@@ -64,8 +64,8 @@ android {
 apply plugin: 'org.mozilla.rust-android-gradle.rust-android'
 
 dependencies {
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.3.0'
+    androidTestImplementation 'androidx.test:runner:1.7.0'
     androidTestImplementation 'junit:junit:4.13.2'
 
     // The version check here is disabled, because it incorrectly warns that a
@@ -74,7 +74,7 @@ dependencies {
     //noinspection GradleDependency
     androidTestImplementation 'commons-io:commons-io:2.11.0'
 
-    implementation 'androidx.annotation:annotation:1.6.0'
+    implementation 'androidx.annotation:annotation:1.9.1'
 }
 
 cargo {
