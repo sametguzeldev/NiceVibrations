@@ -3,17 +3,19 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    namespace 'com.lofelt.LofeltHapticsExamplePreAuthored'
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.lofelt.LofeltHapticsExamplePreAuthored"
-        minSdkVersion 26
+        minSdk 26
+        targetSdk 34
         versionCode 1
         versionName "1.0.0"
     }
 
-    // Specify the NDK version so that the stripDebugDebugSymbols build task works correctly
-    android.ndkVersion "21.3.6528147"
+    // NDK 27+ is required for Android 16KB page size support
+    android.ndkVersion "27.0.12077973"
 
     buildTypes {
         release {
@@ -22,11 +24,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
-    lintOptions {
+    lint {
         // generate to the CLI a text report of issues
         textReport true
         // treat all warnings as errors
@@ -43,8 +45,8 @@ dependencies {
     //noinspection GradleDependency
     implementation 'commons-io:commons-io:2.11.0'
 
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation files('../../../../android-library/LofeltHaptics.aar')
 }

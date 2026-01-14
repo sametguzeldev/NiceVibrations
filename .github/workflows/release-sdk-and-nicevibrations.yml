@@ -20,9 +20,9 @@ jobs:
         os: [windows-latest, macos-latest]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
-    - uses: actions/cache@v2
+    - uses: actions/cache@v4
       with:
         path: |
           ~/.cargo/registry
@@ -38,7 +38,7 @@ jobs:
 
     - uses: actions/upload-artifact@v4
       with:
-        name: unity-editor-plugins-folder
+        name: unity-editor-plugins-folder-${{ matrix.os }}
         path: |
           interfaces/unity/NiceVibrations/Assets/NiceVibrations/Plugins/Windows/x64/
           interfaces/unity/NiceVibrations/Assets/NiceVibrations/Plugins/macOS/
@@ -47,9 +47,9 @@ jobs:
     needs: release-unity-editor-plugin
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
-    - uses: actions/cache@v2
+    - uses: actions/cache@v4
       with:
         path: |
           ~/.cargo/registry
@@ -62,27 +62,33 @@ jobs:
     # wrong with the previous job.
     # This step moves the Unity Editor plugin dynamic libraries into the right folder for creating
     # the Nice Vibrations asset package later in the workflow.
-    - name: Get Unity Editor Plugin artifacts
+    - name: Get Unity Editor Plugin artifacts (Windows)
       uses: actions/download-artifact@v4.1.7
       with:
-        name: unity-editor-plugins-folder
+        name: unity-editor-plugins-folder-windows-latest
         path: interfaces/unity/NiceVibrations/Assets/NiceVibrations/Plugins/
 
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
+    - name: Get Unity Editor Plugin artifacts (macOS)
+      uses: actions/download-artifact@v4.1.7
       with:
-        java-version: 1.8
+        name: unity-editor-plugins-folder-macos-latest
+        path: interfaces/unity/NiceVibrations/Assets/NiceVibrations/Plugins/
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
 
     - name: Install brew dependencies
       run: |
           brew install rename doxygen graphviz
           echo PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH" >> $GITHUB_ENV
 
-    - name: Install Rust 1.60.0 toolchain
-      uses: actions-rs/toolchain@v1
+    - name: Install Rust 1.75.0 toolchain
+      uses: dtolnay/rust-toolchain@stable
       with:
-          toolchain: 1.60.0
-          override: true
+          toolchain: 1.75.0
           components: rustfmt, clippy
 
     - name: Install cargo-lipo
@@ -99,8 +105,8 @@ jobs:
           sh ./install.sh
           cd ..
 
-    - name: Install NDK version 21.3.6528147
-      run: sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;21.3.6528147"
+    - name: Install NDK version 27.0.12077973
+      run: sudo ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --install "ndk;27.0.12077973"
 
     - name: Install Rust Android targets
       run: rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android

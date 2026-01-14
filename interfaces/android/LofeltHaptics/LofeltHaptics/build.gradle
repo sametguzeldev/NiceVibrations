@@ -3,18 +3,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    namespace 'com.lofelt.haptics'
+    compileSdk 34
 
     defaultConfig {
-        minSdkVersion 17
-
-        // Don't warn about not using the latest available SDK version.
-        // Upgrading the target SDK requires upgrading Gradle, the Android
-        // Gradle Plugin, the Rust Gradle Plugin and Java. The updated Java
-        // broke the CI, as the sdkmanager, used to install the NDK on the CI,
-        // is not compatible with Java 11.
-        //noinspection OldTargetApi
-        targetSdkVersion 31
+        minSdk 21
+        targetSdk 34
 
         versionCode 1
         versionName "1.3.4"
@@ -24,9 +18,10 @@ android {
     }
 
     // Specifying the version of the NDK is needed because otherwise the Rust
-    // plugin doesn't find the NDK. The actual version doesn't matter, any would do.
+    // plugin doesn't find the NDK.
+    // NDK 27+ is required for Android 16KB page size support.
     // See https://github.com/mozilla/rust-android-gradle/issues/29.
-    android.ndkVersion "21.3.6528147"
+    android.ndkVersion "27.0.12077973"
 
     buildTypes {
         release {
@@ -50,11 +45,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
-    lintOptions {
+    lint {
         // generate to the CLI a text report of issues
         textReport true
         // treat all warnings as errors
