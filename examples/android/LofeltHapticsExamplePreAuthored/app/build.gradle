@@ -33,8 +33,8 @@ android {
         textReport true
         // treat all warnings as errors
         warningsAsErrors true
-        // disables warnings for newer versions of dependencies
-        disable 'GradleDependency'
+        // disable various checks not relevant for this example app
+        disable 'GradleDependency', 'OldTargetApi', 'DataExtractionRules', 'ObsoleteSdkInt', 'MonochromeLauncherIcon'
     }
 }
 
